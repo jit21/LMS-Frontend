@@ -10,7 +10,9 @@ function Checkout(){
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const razorpayKey=useSelector((state)=>state?.razorpay?.key);
-    const subscription_id=useSelector((state)=>state?.razorpay?.subscription_id);
+    // const subscription_id=useSelector((state)=>state?.razorpay?.subscription_id);
+    const subscription_id = useSelector((state)=>state?.razorpay?.subscriptionId);
+
     const userData= useSelector((state)=>state?.auth?.data);
     const isPaymentVerified=useSelector((state)=>state?.razorpay?.isPaymeentVerified);
     const paymentDetails={
