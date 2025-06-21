@@ -30,19 +30,36 @@ export const purchaseCourseBundle= createAsyncThunk("/purchaseCourse",async()=>{
         toast.error(error?.response?.data?.message || "Something went wrong while purchasing course bundle");
     }
 })
-export const verifyUserPayments= createAsyncThunk("/payments/verify",async(data)=>{
-    try {
-        const response =await axiosInstance.post("/payments/verify",{
-            razorpay_payment_id:data.razorpay_payment_id,
-            razorpay_subscription_id:data.razorpay_subscription_id,
-            razorpay_signature:data.razorpay_signature
-        });
-        return response.data;
+// export const verifyUserPayments= createAsyncThunk("/payments/verify",async(data)=>{
+//     try {
+//         const response =await axiosInstance.post("/payments/verify",{
+//             razorpay_payment_id:data.razorpay_payment_id,
+//             razorpay_subscription_id:data.razorpay_subscription_id,
+//             razorpay_signature:data.razorpay_signature
+//         });
+//         return response.data;
         
+//     } catch (error) {
+//         toast.error("Something went wrong while verifying payment");
+//     }
+// })
+export const verifyUserPayments = createAsyncThunk(
+  "/payments/verify",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/payments/verify", {
+        razorpay_payment_id: data.razorpay_payment_id,
+        razorpay_subscription_id: data.razorpay_subscription_id,
+        razorpay_signature: data.razorpay_signature,
+      });
+      return response.data;
     } catch (error) {
-        toast.error("Something went wrong while verifying payment");
+      return rejectWithValue(
+        error?.response?.data || { success: false, message: "Payment verification failed" }
+      );
     }
-})
+  }
+);
 export const getPaymentRecord= createAsyncThunk("/payments/record",async()=>{
     try {
         const response =axiosInstance.get("/payments?count=100");
