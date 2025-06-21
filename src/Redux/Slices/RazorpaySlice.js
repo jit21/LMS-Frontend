@@ -5,7 +5,7 @@ import { act } from "react";
 const initialState={
     key:"",
     subscriptionId:"",
-    isPaymeentVerified:false,
+    isPaymentVerified: false,
     allPayments:{},
     finalMonths:{
 
